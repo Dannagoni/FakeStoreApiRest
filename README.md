@@ -1,1 +1,1 @@
-Fake Store Api Restt
+Fake Store Api Rest
