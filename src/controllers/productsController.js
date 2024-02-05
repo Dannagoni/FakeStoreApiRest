@@ -21,6 +21,7 @@ const postProduct = async (req, res) => {
           },
         image,
       });
+      
         existingCategory.products.push(savedProduct._id);
         await existingCategory.save();
   
@@ -105,6 +106,7 @@ const updateProduct = async (req, res) => {
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
+        existingCategory.products = existingCategory.products.filter(productId => productId.toString() !== id.toString());
         existingCategory.products.push(updatedProduct._id);
         await existingCategory.save();
 
