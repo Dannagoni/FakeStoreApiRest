@@ -91,6 +91,12 @@ const updateProduct = async (req, res) => {
         const existingCategory = await Categories.findOne({ name: category.name})
         if(!existingCategory)
         return res.status(404).json({message: `Category ${category.name} not found` })
+        const existingProduct = await Product.findById(id);
+        // Verifica si los valores son iguales utilizando equals de Mongoose
+        if (existingProduct && existingProduct.equals({ name, description, price, category: existingCategory, image })) {
+            return res.status(200).json({ message: "Product has already been updated", product: existingProduct });
+        }
+
         const updatedProduct = await Product.findByIdAndUpdate(
             id,
             {
