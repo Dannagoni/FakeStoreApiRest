@@ -1,25 +1,6 @@
 const Categories = require('../models/categoriesModel');
 const Product = require("../models/productsModel");
 
-const postCategory = async (req, res) => {
-  try {
-    const  {id, name, image, products } = req.body;
-
-    const newCategory = new Categories({
-      id,
-      name,
-      products: [],
-      image,
-    });
-
-    const savedCategory = await newCategory.save();
-
-    res.status(200).json(savedCategory);
-  } catch (error) {
-    res.status(500).json({ error: "Error to create the category" });
-  }
-};
-
 const getAllCategories = async (req, res) => {
     try {
         const allCategories = await Categories.find();
@@ -28,6 +9,25 @@ const getAllCategories = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+const postCategory = async (req, res) => {
+    try {
+      const  {id, name, image, products } = req.body;
+  
+      const newCategory = new Categories({
+        id,
+        name,
+        products: [],
+        image,
+      });
+  
+      const savedCategory = await newCategory.save();
+  
+      res.status(200).json(savedCategory);
+    } catch (error) {
+      res.status(500).json({ error: "Error to create the category" });
+    }
+  };
 
 const getCategoryById = async (req, res) => {
     try {
@@ -40,22 +40,22 @@ const getCategoryById = async (req, res) => {
         res.status(500).json({error: error.message})
     }
 }
+
 const getCategoryByName = async (req, res) => {
     try {
         const { name } = req.query;
-
-        const categoryByName = await Categories.find({ name: { $regex: new RegExp(name, 'i') } });
-
-        if (!categoryByName || categoryByName.length === 0) {
-            return res.status(404).json({ error: `The name ${name} not found` });
+        if (name.length === 0) {
+            return res.status(400).json({ error: 'Name parameter is missing in the query' });
         }
-
+        const categoryByName = await Categories.findOne({ name });
+        if (categoryByName.length === 0) {
+            return res.status(404).json({ error: `Category with name ${name} not found` });
+        }
         res.status(200).json(categoryByName);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
-
 
 const updateCategory = async (req, res) => {
     try {
@@ -91,17 +91,26 @@ const updateCategory = async (req, res) => {
     }
 };
 
-const deleteCategory = async(req,res) => {
+const deleteCategory = async(req, res) => {
     try {
-        const {id} = req.params
-        const deleteCategory = await Categories.findByIdAndDelete(id)
-        if(!deleteCategory)
-        return res.status(404).json("Product not found")
-        res.status(200).json({message: "Product deleted successfully",deleteCategory})
+        const { id } = req.params;
+        const productsToUpdate = await Product.find({ 'category': id });
+        for (const product of productsToUpdate) {
+            product.category = null;
+            await product.save();
+        }
+        const deleteCategory = await Categories.findByIdAndDelete(id);
+
+        if (!deleteCategory) {
+            return res.status(404).json({ message: "Category not found" });
+        }
+
+        res.status(200).json({ message: "Category deleted successfully", deleteCategory });
     } catch (error) {
-        res.status(500).json({error: error.message})
+        res.status(500).json({ error: error.message });
     }
 }
+
 
 module.exports = {
     postCategory,

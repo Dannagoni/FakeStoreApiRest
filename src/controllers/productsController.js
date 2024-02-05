@@ -1,6 +1,14 @@
 const Product = require("../models/productsModel");
 const Categories = require('../models/categoriesModel');
 
+const getAllProducts = async (req, res) => {
+    try {
+        const allProducts = await Product.find().populate('category', 'name image');;
+        res.status(200).json(allProducts);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 const postProduct = async (req, res) => {
     try {
@@ -41,16 +49,6 @@ const postProduct = async (req, res) => {
       res.status(500).json({ error: "Error al crear el producto" });
     }
   };
-  
-
-const getAllProducts = async (req, res) => {
-    try {
-        const allProducts = await Product.find().populate('category', 'name image');;
-        res.status(200).json(allProducts);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
 
 const getProductById = async (req, res) => {
     try {
@@ -128,6 +126,10 @@ const deleteProduct = async(req,res) => {
         const deleteProduct = await Product.findByIdAndDelete(id)
         if(!deleteProduct)
         return res.status(404).json("Product not found")
+        await Categories.updateMany(
+            { },
+            { $pull: { products: id } }
+        );
         res.status(200).json({message: "Product deleted successfully",deleteProduct})
     } catch (error) {
         res.status(500).json({error: error.message})
