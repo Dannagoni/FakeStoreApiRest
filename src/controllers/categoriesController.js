@@ -1,4 +1,5 @@
 const Categories = require('../models/categoriesModel');
+const Product = require("../models/productsModel");
 
 const postCategory = async (req, res) => {
   try {
@@ -65,17 +66,26 @@ const updateCategory = async (req, res) => {
 
         const { id } = req.body;
 
+        const existingCategory = await Categories.findById(id);
+        if (!existingCategory) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+
         const updatedCategory = await Categories.findByIdAndUpdate(
             id,
-            { name, image, products },
+            {
+                name,
+                image,
+                products
+            },
+            
             { new: true, runValidators: true }
         );
 
         if (!updatedCategory) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
-        res.status(200).json({ message: "Product updated successfully", product: updatedCategory });
+        res.status(200).json({ message: "Category updated successfully", category: updatedCategory });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

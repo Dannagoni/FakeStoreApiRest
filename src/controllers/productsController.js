@@ -1,29 +1,50 @@
 const Product = require("../models/productsModel");
+const Categories = require('../models/categoriesModel');
+
 
 const postProduct = async (req, res) => {
-  try {
-    const { name, description, price, category, image } = req.body;
+    try {
+      const { name, description, price, category, image } = req.body;
+  
+      let existingCategory = await Categories.findOne({ name: category.name });
+      if (!existingCategory) {
+        return res.status(404).json({ error: `Category '${category.name}' not found` });
+      }
 
-    const newProduct = new Product({
-      name,
-      description,
-      price,
-      category,
-      image,
-    });
-
-    const savedProduct = await newProduct.save();
-
-    res.status(200).json(savedProduct);
-  } catch (error) {
-    console.error("Error al crear el producto:", error);
-    res.status(500).json({ error: "Error al crear el producto" });
-  }
-};
+      const savedProduct = await Product.create({
+        name,
+        description,
+        price,
+        category: {
+            _id: existingCategory._id,
+            image: existingCategory.image
+          },
+        image,
+      });
+        existingCategory.products.push(savedProduct._id);
+        await existingCategory.save();
+  
+      res.status(200).json({
+        name: savedProduct.name,
+        description: savedProduct.description,
+        price: savedProduct.price,
+        category: {
+          name: existingCategory.name,
+          image: existingCategory.image,
+        },
+        image: savedProduct.image,
+        _id: savedProduct._id,
+      });
+    } catch (error) {
+      console.error("Error al crear el producto:", error);
+      res.status(500).json({ error: "Error al crear el producto" });
+    }
+  };
+  
 
 const getAllProducts = async (req, res) => {
     try {
-        const allProducts = await Product.find();
+        const allProducts = await Product.find().populate('category', 'name image');;
         res.status(200).json(allProducts);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -65,17 +86,27 @@ const updateProduct = async (req, res) => {
             return res.status(400).json({ message: "Please provide all required fields." });
         }
 
-        const { productId } = req.body;
-
+        const { id } = req.body;
+        const existingCategory = await Categories.findOne({ name: category.name})
+        if(!existingCategory)
+        return res.status(404).json({message: `Category ${category.name} not found` })
         const updatedProduct = await Product.findByIdAndUpdate(
-            productId,
-            { name, description, price, category, image },
+            id,
+            {
+                name,
+                description,
+                price,
+                category: existingCategory,
+                image
+            },
             { new: true, runValidators: true }
         );
 
         if (!updatedProduct) {
             return res.status(404).json({ message: 'Product not found' });
         }
+        existingCategory.products.push(updatedProduct._id);
+        await existingCategory.save();
 
         res.status(200).json({ message: "Product updated successfully", product: updatedProduct });
     } catch (error) {
