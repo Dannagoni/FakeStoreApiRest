@@ -4,6 +4,7 @@ require('dotenv').config();
 const productsRoutes = require ('./routes/productsRoutes')
 const userRoutes = require('./routes/usersRoutes');
 const categoryRouter = require('./routes/categoriesRoutes');
+const filtersRouter = require('./routes/filtersRoutes');
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/api', productsRoutes)
 app.use('/api', userRoutes)
 app.use('/api', categoryRouter)
+app.use('/api', filtersRouter)
 
 app.get('/', (req, res) => {
     res.send('welcome to my API')
