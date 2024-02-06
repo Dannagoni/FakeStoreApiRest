@@ -41,22 +41,6 @@ const getCategoryById = async (req, res) => {
     }
 }
 
-const getCategoryByName = async (req, res) => {
-    try {
-        const { name } = req.query;
-        if (name.length === 0) {
-            return res.status(400).json({ error: 'Name parameter is missing in the query' });
-        }
-        const categoryByName = await Categories.findOne({ name });
-        if (categoryByName.length === 0) {
-            return res.status(404).json({ error: `Category with name ${name} not found` });
-        }
-        res.status(200).json(categoryByName);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 const updateCategory = async (req, res) => {
     try {
         const { name, image, products } = req.body;
@@ -117,7 +101,6 @@ module.exports = {
     getAllCategories,
     getCategoryById,
     updateCategory,
-    getCategoryByName,
     deleteCategory,
 };
 

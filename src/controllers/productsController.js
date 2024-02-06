@@ -61,22 +61,6 @@ const getProductById = async (req, res) => {
         res.status(500).json({error: error.message})
     }
 }
-const getProductByName = async (req, res) => {
-    try {
-        const { name } = req.query;
-
-        const productByName = await Product.find({ name: { $regex: new RegExp(name, 'i') } });
-
-        if (!productByName || productByName.length === 0) {
-            return res.status(404).json({ error: `The name ${name} not found` });
-        }
-
-        res.status(200).json(productByName);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 
 const updateProduct = async (req, res) => {
     try {
@@ -141,7 +125,6 @@ module.exports = {
     getAllProducts,
     getProductById,
     updateProduct,
-    getProductByName,
     deleteProduct,
 };
 

@@ -5,7 +5,6 @@ const { postCategory, getAllCategories, getCategoryById, getCategoryByName, upda
 categoryRouter.post('/categories', postCategory);
 categoryRouter.get('/categories', getAllCategories);
 categoryRouter.get('/categories/:id', getCategoryById);
-categoryRouter.get('/categories', getCategoryByName);
 categoryRouter.put('/categories', updateCategory);
 categoryRouter.delete('/categories/:id', deleteCategory);
 

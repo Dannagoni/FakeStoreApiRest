@@ -5,7 +5,6 @@ const { postProduct, getAllProducts, getProductById, updateProduct, deleteProduc
 productRouter.post('/products', postProduct);
 productRouter.get('/products', getAllProducts);
 productRouter.get('/products/:id', getProductById);
-productRouter.get('/products', getProductByName);
 productRouter.put('/products', updateProduct)
 productRouter.delete('/products/:id', deleteProduct)
 
