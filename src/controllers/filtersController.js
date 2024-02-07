@@ -49,35 +49,15 @@ const filterByprice = async (req,res) => {
 
 const filterByPriceRange = async (req, res) => {
     try {
-        const { price_min, price_max } = req.query;
+        const { minPrice, maxPrice } = req.params;
 
-        console.log('price_min:', price_min);
-        console.log('price_max:', price_max);
+        const products = await Product.find({ 
+            price: { $gte: parseFloat(minPrice), $lte: parseFloat(maxPrice) }
+        });
 
-        // Convertir los precios a números
-        const minPrice = parseFloat(price_min);
-        const maxPrice = parseFloat(price_max);
-
-        console.log('minPrice:', minPrice);
-        console.log('maxPrice:', maxPrice);
-
-        // Verificar si los precios son válidos
-        if (isNaN(minPrice) || isNaN(maxPrice)) {
-            return res.status(400).json({ error: 'Los precios proporcionados no son válidos.' });
-        }
-
-        // Realizar la consulta a la base de datos
-        const products = await Product.find({
-            price: { $gte: minPrice, $lte: maxPrice }
-        }).exec();
-
-        console.log('products:', products);
-
-        // Devolver los productos encontrados
-        res.json(products);
+        res.status(200).json(products);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Hubo un error al procesar la solicitud.' });
+        res.status(500).json({ error: error.message });
     }
 };
 

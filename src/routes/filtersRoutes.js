@@ -5,7 +5,7 @@ const filtersRouter = express.Router();
 filtersRouter.get('/products/search/:name', filterProductsByName); 
 filtersRouter.get('/categories/search/:name', filterByCategory);
 filtersRouter.get('/products/price/:price', filterByprice);
-filtersRouter.get('/products', filterByPriceRange);
+filtersRouter.get('/products/price/:minPrice/:maxPrice', filterByPriceRange);
 
 
 module.exports = filtersRouter;
