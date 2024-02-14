@@ -1,0 +1,44 @@
+.container{
+  display: flex;
+    flex-direction: column;
+    background-color: #040922;
+    width: 200px;
+    height: 100vh;
+}
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #040922;
+    width: 200px;
+    margin-top: 150%;
+  }
+  
+  .nav {
+    flex: 1;
+    padding: 10px;
+  }
+  
+  .item {
+    cursor: pointer;
+    padding: 5px;
+    margin-bottom: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .item:hover {
+    background-color: lightgray;
+  }
+  
+  .selected {
+    background-color: lightblue;
+  }
+  
+  .documentation {
+    flex: 3;
+    padding: 10px;
+  }
+  
+  .documentation h2 {
+    margin-bottom: 10px;
+  }
+  
