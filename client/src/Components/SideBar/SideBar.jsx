@@ -4,10 +4,16 @@ import DocumentsOptions from '../Documents/DocumetsOptions';
 export const Sidebar = ({ handleOptionClick }) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [openDashboard, setOpenDashboard] = useState(null);
+  const [selectedSubmenu, setSelectedSubmenu] = useState(null); // Nuevo estado para almacenar el submenú seleccionado
 
   const handleItemClick = (name) => {
     setSelectedItem(name);
-    handleOptionClick(name); // Aquí se pasa el nombre de la opción seleccionada al componente padre
+    setSelectedSubmenu(null); // Reiniciar el submenú seleccionado cuando se hace clic en una nueva opción principal
+    handleOptionClick(name);
+  };
+
+  const handleSubmenuClick = (submenuTitle) => {
+    setSelectedSubmenu(submenuTitle);
   };
 
   const toggleDashboardSubMenu = (dashboardName) => {
@@ -22,7 +28,7 @@ export const Sidebar = ({ handleOptionClick }) => {
             <li key={index}>
               <a
                 href={`#${option.name}`}
-                className={`flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ${selectedItem === option.name ? 'bg-gray-100 dark:bg-gray-700' : ''}`}
+                className={`flex items-center mb-4 rounded-lg dark:text-white hover:bg-gradient-to-br from-purple to-purple-600 dark:hover:bg-gradient-to-br from-purple to-purple-600 group ${selectedItem === option.name ? 'bg-gradient-to-br from-purple to-purple-600' : ''}`}
                 onClick={() => handleItemClick(option.name)}
               >
                 <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21" onClick={() => toggleDashboardSubMenu(option.name)}>
@@ -33,7 +39,16 @@ export const Sidebar = ({ handleOptionClick }) => {
               <ul className={`pl-6 space-y-2 font-medium overflow-hidden transition-all duration-300 ${openDashboard === option.name ? 'max-h-40' : 'max-h-0'}`}>
                 {Object.values(option.submenus).map((submenu, submenuIndex) => (
                   <li key={submenuIndex}>
-                    <a href={`#${submenu.title}`} className="block p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">{submenu.title}</a>
+                    <a
+                      href={`#${submenu.title}`}
+                      className={`pl-6 block rounded-lg dark:text-white hover:bg-gradient-to-br from-purple to-purple-600 dark:hover:bg-gradient-to-br from-purple to-purple-600 ${selectedItem === option.name && selectedSubmenu === submenu.title ? 'bg-gradient-to-br from-purple to-purple-600 text-white' : 'text-gray-500'}`}
+                      onClick={() => {
+                        handleSubmenuClick(submenu.title);
+                        handleOptionClick(option.name);
+                      }}
+                    >
+                      {submenu.title}
+                    </a>
                   </li>
                 ))}
               </ul>

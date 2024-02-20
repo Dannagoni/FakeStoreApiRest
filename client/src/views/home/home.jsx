@@ -9,7 +9,7 @@ export const Home = () => {
       <div className="flex justify-center">
         <div className="p-36 mt-20">
           <h1 className="text-white text-5xl font-bold mb-3">
-            CommerceX: Fake Store Api
+            ApiCommerce: Fake Store Api
           </h1>
           <p className="text-zinc-400">
             Tu Puerta de Acceso a Datos de Productos en la Nube para tu Prototipo de sitio web de comercio electrónico o compras.

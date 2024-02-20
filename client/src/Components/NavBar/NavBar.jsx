@@ -5,7 +5,7 @@ export const NavBar = () => {
   return (
     <div className="bg-blue950  text-white py-5 px-6">
       <Link to='/'>
-      CommerceX
+      ApiCommerce
       </Link>
     </div>
   )
