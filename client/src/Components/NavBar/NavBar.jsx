@@ -1,7 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export const NavBar = () => {
   return (
-    <div>NavBar</div>
+    <div className="bg-blue950  text-white py-5 px-6">
+      <Link to='/'>
+      CommerceX
+      </Link>
+    </div>
   )
 }
