@@ -5,8 +5,7 @@
 
 ¡Bienvenido a nuestra API REST que ofrece imágenes generadas mediante inteligencia artificial (IA)! 
 
-Es una API que ofrece mas de 200
-
+Con más de 500 objetos de ropa, categorias y usuarios disponibles
 
 ![screen](https://github.com/Dannagoni/FakeStoreApiRest/assets/128631249/08bbcd90-fce7-4d85-8a3a-bbd7550a2d9b)
 
