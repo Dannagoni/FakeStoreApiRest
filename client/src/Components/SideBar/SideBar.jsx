@@ -23,7 +23,7 @@ export const Sidebar = ({ handleOptionClick }) => {
   return (
     <aside id="default-sidebar" className="fixed top-15 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 bg-blue950" aria-label="Sidebar">
       <div className="h-full px-3 py-4 overflow-y-auto">
-        <ul className="space-y-2 font-medium">
+        <ul className="space-y-2 font-medium ml-2 mt-2">
           {DocumentsOptions.map((option, index) => (
             <li key={index}>
               <a
