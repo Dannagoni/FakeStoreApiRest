@@ -12,23 +12,18 @@ export const Home = () => {
             ApiCommerce: Fake Store Api
           </h1>
           <p className="text-zinc-400">
-            Tu Puerta de Acceso a Datos de Productos en la Nube para tu
-            Prototipo de sitio web de comercio electrónico o compras.
+            Tu Puerta de Acceso a Datos de Productos en la Nube para tu Prototipo de sitio web de comercio electrónico o compras.
           </p>
-          <Link to="/documentation">
+          <Link to='/documentation'>
             <button className="bg-gradient-to-br from-purple to-purple-600 text-white px-6 py-4 rounded-full shadow-lg font-bold text-lg select-none cursor-pointer mt-4">
               {"Get Start ➜"}
             </button>
           </Link>
         </div>
-        <img
-          src="/fakeapistoreimage.png"
-          alt="imageStore"
-          style={{ maxWidth: "700px" }}
-        />
+        <img src='/fakeapistoreimage.png' alt="imageStore" style={{ maxWidth: "700px" }} />
       </div>
-      <Cards />
-      <Footer />
+      <Cards/>
+      
     </div>
   );
 };

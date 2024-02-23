@@ -28,23 +28,23 @@ export const Documents = ({ selectedOption, subOptionDescription }) => {
       // Si hay un submenú seleccionado, muestra los detalles del submenú
       return (
         <div>
-          <h3 className="text-white text-4xl font-bold mb-2">
+          <h3 className="text-white text-4xl font-bold">
             {optionData.name}
           </h3>
           <hr
-            className="mt-3 mb-6 border-gray-500 w-full"
+            className="border-gray-500 w-full mt-4 mb-4"
             style={{ maxWidth: "100%" }}
           />
-          <h3 className="text-white text-4xl font-bold mb-2">
+          <h3 className="text-white text-4xl font-bold">
             {subOptionData.title}
           </h3>
-          <p className="text-lg text-white mt-4">{subOptionData.description}</p>
-          <div className="flex justify-center mt-4">
-            <p className=" text-white bg-bluelight mt-4 p-3">
+          <p className="text-white mt-2 mb-6">{subOptionData.description}</p>
+          <div className="flex items-center">
+            <p className=" text-white bg-bluelight p-3 mr-5">
               {subOptionData.metodo_http}
             </p>
-            <div className="bg-bluelight mt-4 ml-6 p-3">
-              <p className="text-lg text-white">{subOptionData.endpoint}</p>
+            <div className="bg-bluelight p-3">
+              <p className="text-white">{subOptionData.endpoint}</p>
             </div>
           </div>
         </div>
@@ -53,10 +53,10 @@ export const Documents = ({ selectedOption, subOptionDescription }) => {
       // Si no hay un submenú seleccionado pero hay una opción seleccionada, muestra los detalles de la opción
       return (
         <div>
-          <h2 className="text-lg text-white font-bold mb-2">
+          <h2 className="text-lg text-white font-bold">
             {optionData.name}
           </h2>
-          <p className="text-lg text-white mb-2">
+          <p className="text-lg text-white">
             <strong>Descripción:</strong> {optionData.description}
           </p>
         </div>

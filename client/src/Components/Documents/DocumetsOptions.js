@@ -5,7 +5,7 @@ const DocumentsOptions = [
     submenus: {
       getAllProducts: {
         title: "Get all products",
-        description: "Descripción de getAllProducts",
+        description: "Access the compilation of 200 products via the /products endpoint.",
         metodo_http:"[GET]",
         endpoint: "http://localhost:9000/api/products",
         output: "",
