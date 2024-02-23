@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import DocumentsOptions from '../Documents/DocumetsOptions';
 
-export const Sidebar = ({ handleOptionClick }) => {
+export const Sidebar = ({ handleOptionClick, handleSubmenuDescription}) => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [openDashboard, setOpenDashboard] = useState(null);
-  const [selectedSubmenu, setSelectedSubmenu] = useState(null); // Nuevo estado para almacenar el submenú seleccionado
+  const [selectedSubmenu, setSelectedSubmenu] = useState(null); 
 
   const handleItemClick = (name) => {
     setSelectedItem(name);
@@ -14,6 +14,7 @@ export const Sidebar = ({ handleOptionClick }) => {
 
   const handleSubmenuClick = (submenuTitle) => {
     setSelectedSubmenu(submenuTitle);
+    handleSubmenuDescription(submenuTitle);
   };
 
   const toggleDashboardSubMenu = (dashboardName) => {
@@ -44,7 +45,7 @@ export const Sidebar = ({ handleOptionClick }) => {
                       className={`pl-6 block rounded-lg dark:text-white hover:bg-gradient-to-br from-purple to-purple-600 dark:hover:bg-gradient-to-br from-purple to-purple-600 ${selectedItem === option.name && selectedSubmenu === submenu.title ? 'bg-gradient-to-br from-purple to-purple-600 text-white' : 'text-gray-500'}`}
                       onClick={() => {
                         handleSubmenuClick(submenu.title);
-                        handleOptionClick(option.name);
+                        // handleOptionClick(option.name);
                       }}
                     >
                       {submenu.title}
